@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+        {% for band in bands %}
+            <div class="col-sm-4">
+                <div class="card">
+                    {% if band.poster %}
+                        <img class="card-img-top" src="{{ band.poster.url }}" alt="{{ band.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h4 class="card-title">{{ band.title }}</h4>
+                        <p class="card-text"><strong>Žánry:</strong>
+                            {% for genre in band.genres.all %}
+                                <a href="https://cs.wikipedia.org/wiki/{{ genre.name }}" class="btn btn-light" target="_blank">{{ genre.name }}</a>
+                            {% endfor %}
+                        </p>
+                        <p><strong>Datum založení: </strong> {{ band.release_date }}</p>
+                        <a href="https://cs.wikipedia.org/wiki/{{ band.title }}" target="_blank" class="btn btn-primary">Podrobnosti</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <strong>Celkový počet kapel:</strong> {{ num_bands }}
+        </div>
+    </div>
+{% endblock %}
