@@ -1,2 +1,3 @@
-Zatim hotovo pouze 127.0.0.1:8000/admin
-Zbytek dodělám co by dup
+Úvodní stránka hotova
+
+Ostatní stránky už skoro taky, jen potřebuju dořešit web scraping a následně upravit vzhled

@@ -2,10 +2,10 @@
 {% block content %}
     <div class="row">
         {% for band in bands %}
-            <div class="col-sm-4">
-                <div class="card">
+            <div class="col-sm-2">
+                <div class="card p-2">
                     {% if band.poster %}
-                        <img class="card-img-top" src="{{ band.poster.url }}" alt="{{ band.title }}">
+                        <img class="card-img-top rounded-circle" src="{{ band.poster.url }}" alt="{{ band.title }}">
                     {% endif %}
                     <div class="card-body">
                         <h4 class="card-title">{{ band.title }}</h4>
@@ -14,17 +14,10 @@
                                 <a href="https://cs.wikipedia.org/wiki/{{ genre.name }}" class="btn btn-light" target="_blank">{{ genre.name }}</a>
                             {% endfor %}
                         </p>
-                        <p><strong>Date of establishment: </strong> {{ band.release_date }}</p>
                         <a href="{{ band.get_absolute_url }}" class="btn btn-primary">Details</a>
                     </div>
                 </div>
             </div>
         {% endfor %}
-    </div>
-    <div class="row">
-        <div class="col-sm-12 text-center">
-            <h3><strong>All bands count:</strong> {{ num_bands }}</h3>
-            <a href="{% url 'band-list' %}">See all</a>
-        </div>
     </div>
 {% endblock %}

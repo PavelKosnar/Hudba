@@ -30,6 +30,9 @@ class Band(models.Model):
                                verbose_name="Poster",
                                upload_to="posters/")
     genres = models.ManyToManyField(Genre, help_text='Select a genre for this band')
+    slug = models.SlugField(null=True,
+                            help_text="Use name of the band with only small letters and without spaces",
+                            verbose_name="Link")
 
     class Meta:
         ordering = ["-release_date", "title"]
@@ -38,7 +41,7 @@ class Band(models.Model):
         return f"{self.title}, year: {str(self.release_date.year)}"
 
     def get_absolute_url(self):
-        return reverse('band-detail', args=[str(self.id)])
+        return reverse('band-detail', kwargs={"slug": self.slug})
 
 
 class Album(models.Model):
