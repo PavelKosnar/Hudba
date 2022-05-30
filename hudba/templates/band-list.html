@@ -14,6 +14,7 @@
                                 <a href="https://cs.wikipedia.org/wiki/{{ genre.name }}" class="btn btn-light" target="_blank">{{ genre.name }}</a>
                             {% endfor %}
                         </p>
+                        <p class="card-text">{{ band.article|truncatewords:30 }}</p>
                         <a href="{{ band.get_absolute_url }}" class="btn btn-primary">Details</a>
                     </div>
                 </div>

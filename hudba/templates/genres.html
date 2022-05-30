@@ -10,15 +10,17 @@
       {% include 'page/header.html' %}
       {% include 'page/navbar.html' %}
       <main>
-        <div class="row change">
+        <div class="row pl-5 change">
             {% for genre in genres %}
-                <div class="col-sm-2">
-                    <div class="container p-3 my-3 border">
-                        <h2 class="text-center" style="text-transform:capitalize">{{ genre.name }}</h2>
-                        <div class="row justify-content-center">
-                            <p class="card-text pr-2"><a href="https://cs.wikipedia.org/wiki/{{ genre.name }}" class="btn btn-primary">More information</a></p>
-                            <p class="btn btn-secondary pl-2 toggle_bands">Bands with this genre</p>
-                            <p>{{ output }}</p>
+                <div class="col-sm-2 p-2">
+                    <div class="card">
+                        <h2 class="text-center" style="text-transform:capitalize;font-size: 40px">{{ genre.name }}</h2>
+                        <div class="card-body">
+                            <p class="card-text">{{ genre.article|truncatewords:30 }}</p>
+                            <div class="row justify-content-center">
+                                <p class="card-text pr-2"><a href="https://cs.wikipedia.org/wiki/{{ genre.name }}" class="btn btn-primary">More information</a></p>
+                                <p class="btn btn-secondary pl-2 toggle_bands">Bands with this genre</p>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,9 +1,7 @@
-import requests
-from bs4 import BeautifulSoup
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
-
 from hudba.models import Band, Genre
+from hudba.data_manager import bandscsv, bandssql, genrescsv, genressql
 
 
 def index(request):
@@ -21,6 +19,10 @@ def bandlist(request):
         model = Band
         context_object_name = 'bands'
     bands = Band.objects.order_by('title')
+
+    bandscsv()
+    bandssql()
+
     context = {
         'bands': bands
     }
@@ -37,20 +39,12 @@ def genres(request):
     genres = Genre.objects.order_by('name')
     bands = Band.objects.order_by('title')
 
-    class Webscrape:
-        output = []
-        for genre in genres:
-            link = "https://cs.wikipedia.org/wiki/" + genre.name
-            response = requests.get(url=link)
-            soup = BeautifulSoup(response.content, 'html.parser')
-            item = soup.select('p')[0]
-            para = item.text
-            addition = para[:30] + "..."
-            output.append(addition)
+    genrescsv()
+    genressql()
 
     context = {
         'genres': genres,
-        'bands': bands,
-        'output': Webscrape.output
+        'bands': bands
     }
     return render(request, 'genres.html', context=context)
+

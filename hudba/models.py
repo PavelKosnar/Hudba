@@ -11,6 +11,8 @@ class Genre(models.Model):
                             unique=True,
                             verbose_name='Genre name',
                             help_text='Enter a band genre (e.g. pop, rock)')
+    article = models.TextField(default='article',
+                               help_text='Leave blank. Content will be added automatically')
 
     class Meta:
         ordering = ['name']
@@ -33,6 +35,8 @@ class Band(models.Model):
     slug = models.SlugField(null=True,
                             help_text="Use name of the band with only small letters and without spaces",
                             verbose_name="Link")
+    article = models.TextField(default='article',
+                               help_text='Leave blank. Content will be added automatically')
 
     class Meta:
         ordering = ["-release_date", "title"]
