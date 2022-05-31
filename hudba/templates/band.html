@@ -12,7 +12,10 @@
       </header>
       {% include 'page/navbar.html' %}
       <main>
-        <h2>{{ object.title }}</h2>
+          <div class="container">
+              <h2>{{ object.title }}</h2>
+              <p>{{ object.article }}</p>
+          </div>
       </main>
       {% include 'page/footer.html' %}
   </body>

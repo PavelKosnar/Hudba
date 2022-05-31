@@ -1,3 +1,4 @@
+import re
 import requests
 import sqlite3
 from bs4 import BeautifulSoup
@@ -43,8 +44,9 @@ def genrescsv():
             para = item.text
             edit = para.replace('\'', ' ')
             finaledit = edit.replace('\"', ' ')
-            csvinput = genre.name + ';' + finaledit + '...' + '\n'
-            f = open(url, 'a')
+            modify = re.sub(r"\[[^()]*]", "", finaledit)
+            csvinput = genre.name + ';' + modify
+            f = open(url, 'a', encoding='windows-1250')
             f.write(csvinput)
         f.close()
 
@@ -84,12 +86,16 @@ def bandscsv():
             link = "https://cs.wikipedia.org/wiki/" + band.title
             response = requests.get(url=link)
             soup = BeautifulSoup(response.content, 'html.parser')
-            item = soup.select('p')[0]
-            para = item.text
-            edit = para.replace('\'', ' ')
-            finaledit = edit.replace('\"', ' ')
-            csvinput = band.title + ';' + finaledit + '...' + '\n'
-            f = open(url, 'a')
+            csvinput = band.title
+            items = [soup.select('p')[0], soup.select('p')[1], soup.select('p')[2]]
+            for item in items:
+                item = item.text
+                item = item.replace('\'', ' ')
+                item = item.replace('\"', ' ')
+                item = item.replace('¡', ' ')
+                modified_item = re.sub(r"\[[^()]*]", "", item)
+                csvinput = csvinput + ';' + modified_item
+            f = open(url, 'a', encoding='windows-1250')
             f.write(csvinput)
         f.close()
 
@@ -103,10 +109,9 @@ def genressql():
     while i < len(lines):
         split = lines[i].split(';')
         article = split[1]
-        id = i + 1
-        print(i)
+        name = split[0]
 
-        cur.execute("UPDATE hudba_genre SET article = '" + article + "' WHERE id = " + str(id) + "")
+        cur.execute("UPDATE hudba_genre SET article = '" + article + "' WHERE name = '" + name + "'")
         i += 1
     con.commit()
     con.close()
@@ -121,10 +126,9 @@ def bandssql():
     while i < len(lines):
         split = lines[i].split(';')
         article = split[1]
-        id = i + 1
-        print(i)
+        name = split[0]
 
-        cur.execute("UPDATE hudba_band SET article = '" + article + "' WHERE id = " + str(id) + "")
+        cur.execute("UPDATE hudba_band SET article = '" + article + "' WHERE title = '" + name + "'")
         i += 1
 
     con.commit()
