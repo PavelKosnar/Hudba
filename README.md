@@ -1,3 +1,3 @@
 Udělána automatizace
 
-vyskytlo se však plno bugů, které je ještě potřeba vyřešit
+Vyřešeny bugy, zbývá už jen upravit vzhled stránek
